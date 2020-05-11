@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Book;
+use App\Http\Requests\CreateBookRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BookController extends Controller
 {
@@ -33,9 +35,9 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBookRequest $request)
     {
-        //
+        $request->createBook();
     }
 
     /**
@@ -67,9 +69,9 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(CreateBookRequest $request, Book $book)
     {
-        //
+        $request->updateBook($book);
     }
 
     /**
@@ -80,6 +82,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        session()->flash('success', 'Book is successfully deleted.');
     }
 }
